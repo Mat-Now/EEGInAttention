@@ -1,1 +1,1 @@
-from EEGparser import EEGparser, DummyParser 
+from .eegparser import EEGparser, DummyParser 

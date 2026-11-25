@@ -26,6 +26,18 @@ class Parsers(ABC):
 
         pass
 
+    def parse_tag_xml(self,  xml_path: str) -> pd.DataFrame:
+        """
+        Wczytuje plik XML z tagami i zwraca pd.DataFrame z kolumnami 'name' i 'position'.
+
+        Index obiektu odpowiada kolejnym tagom w pliku.
+        """
+
+        pass
+
+
+
+
 
 class DummyParser(Parsers):
 
@@ -45,19 +57,34 @@ class DummyParser(Parsers):
 
             ch_names = ["FC3","FC1","FCZ","FC2","FC4","A1","C5","C3","C1","CZ","C2","C4","C6","A2","CP5","CP3","CP1","CPZ","CP2","CP4","CP6","P1","P2"]
             
-        time = np.arange(0,self.t_recording, 1/self.fs)
+        self.time = np.arange(0,self.t_recording, 1/self.fs)
         data_arr = np.random.normal(0,1, (self.t_recording*self.fs, len(ch_names)))
-        self.data = pd.DataFrame.from_records(data_arr, index=time, columns=ch_names)
+        self.data = pd.DataFrame.from_records(data_arr, index=self.time, columns=ch_names)
 
 
-    def run(self):
+    def read(self):
 
         super().read()
 
         return self.data
 
 
+    def parse_tag_xml(self, xml_path):
+        super().parse_tag_xml(xml_path)
 
+        positions = self.time[::100]
+        names = np.zeros_like(positions)
+        names[::2] = 1
+
+        tags = pd.DataFrame.from_dict({
+            "name" : names,
+            "position" : positions
+        }) 
+
+        return tags
+
+        
+        
 
 
 class EEGparser(Parsers):

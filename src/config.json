@@ -1,0 +1,10 @@
+{
+    	
+    "project" :	"",
+    "save_path" :	"npy/output.npy",
+    "montage" : [""],
+    "highpass_cutoff" :	0.5,
+    "lowpass_cutoff" :	20,
+    "notch" :	1,
+    "verbose" :	1
+}
