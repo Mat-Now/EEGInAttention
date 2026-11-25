@@ -1,0 +1,1 @@
+from EEGparser import EEGparser, DummyParser 
